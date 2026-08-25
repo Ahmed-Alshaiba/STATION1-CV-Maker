@@ -3,7 +3,7 @@
 # STATION1 is additive: it reuses the shared kamal-proxy, the shared Postgres container (shared-postgres), and tunnel.
 
 service: station1
-image: ahmed-alsheiba/station1                 # GHCR repo path MUST be lowercase -> ghcr.io/ahmed-alsheiba/station1
+image: station1
 
 servers:
   web:
@@ -20,17 +20,23 @@ proxy:
   healthcheck:
     path: /up                               # the route added in config/routes.rb
 
+# Self-hosted registry on the Pi, htpasswd-authed (user `stash`, shared with the Stash and
+# DeskFlow projects; the htpasswd file lives at /home/deploy/registry.htpasswd). Plain HTTP on
+# the LAN, so both Docker daemons carry the matching insecure-registries entry.
 registry:
-  server: ghcr.io
-  username: ahmed-alsheiba
+  server: 192.168.8.223:5000
+  username: stash
   password:
-    - KAMAL_REGISTRY_PASSWORD              # from .kamal/secrets (a GHCR PAT)
+    - KAMAL_REGISTRY_PASSWORD              # exported in your shell — see .kamal/secrets
 
 ssh:
   user: deploy                              # the Pi's Kamal SSH user (Kamal defaults to root) — matches the helpdesk
 
 builder:
   arch: arm64                               # the Pi is arm64; Apple Silicon builds it natively
+  driver: docker                            # build+push via the Docker daemon, which honours its
+                                            # insecure-registries; buildx-container ignores that
+                                            # and cannot push over plain HTTP
 
 env:
   clear:

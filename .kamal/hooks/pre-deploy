@@ -1,0 +1,11 @@
+#!/bin/sh
+# Fail fast when the Pi registry password isn't exported.
+#
+# Kamal runs this before every deploy-family command (deploy / redeploy / rollback / setup) and
+# aborts the run if it exits non-zero. Without it, an unset variable becomes an empty password and
+# the push fails deep inside the build with a 401 from the registry.
+#
+# This has to be a hook, not a line in .kamal/secrets: that file is parsed by dotenv, which can't
+# honour ${VAR:?} and never aborts on an empty value. A hook runs in a real shell, so ${VAR:?}
+# (fires on unset OR empty) does the job and its non-zero exit stops the deploy.
+: "${KAMAL_REGISTRY_PASSWORD:?is not set — export the Pi registry htpasswd password (user stash) before deploying}"
