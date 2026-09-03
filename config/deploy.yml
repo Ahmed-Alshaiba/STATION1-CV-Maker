@@ -12,9 +12,7 @@ servers:
 proxy:
   ssl: false                                # Cloudflare terminates TLS; no inbound :443 for Let's Encrypt
   forward_headers: true                     # pass Cloudflare's X-Forwarded-* through (real client IP) — matches helpdesk
-  hosts:
-    - station1.me
-    - www.station1.me                       # www -> apex redirect, if wanted, must be app-side (proxy can't)
+  host: cv.deskflow.dev                     # subdomain of deskflow.dev (same Pi, same proxy, same tunnel)
   app_port: 3000                            # matches Puma / EXPOSE in the Dockerfile
   healthcheck:
     path: /up                               # the route added in config/routes.rb
@@ -42,7 +40,7 @@ env:
     RAILS_ENV: production
     RAILS_SERVE_STATIC_FILES: "true"        # no Nginx in the container
     RAILS_LOG_TO_STDOUT: "true"             # so `kamal app logs` shows Rails logs
-    APP_HOST: station1.me                   # required by the Action Mailer config in production.rb
+    APP_HOST: cv.deskflow.dev               # required by the Action Mailer config in production.rb
     DB_HOST: shared-postgres                # the shared Postgres container (PG 17, on the kamal network)
     DB_PORT: "5432"
     DB_NAME: station1_production

@@ -72,7 +72,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Required so Devise (:recoverable) can build absolute URLs in password-reset emails.
-  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "station1.me"), protocol: "https" }
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "cv.deskflow.dev"), protocol: "https" }
 
   # Deliver mail via SMTP using credentials from the environment (transactional
   # provider such as Resend/Postmark/SendGrid/Mailgun, or a local relay).

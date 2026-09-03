@@ -4,7 +4,7 @@
 
 **Create polished, print-ready CVs in minutes — pick a template, fill a guided form, and export.**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-station1.me-2ea44f?style=for-the-badge&logo=cloudflare&logoColor=white)](https://station1.me)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-cv.deskflow.dev-2ea44f?style=for-the-badge&logo=cloudflare&logoColor=white)](https://cv.deskflow.dev)
 
 ![Ruby](https://img.shields.io/badge/Ruby-3.4.6-CC342D?logo=ruby&logoColor=white)
 ![Rails](https://img.shields.io/badge/Rails-7.0-CC0000?logo=rubyonrails&logoColor=white)
@@ -12,7 +12,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwindcss&logoColor=white)
 ![Hotwire](https://img.shields.io/badge/Hotwire-Turbo_%26_Stimulus-5A2D91)
 
-[**Live site →**](https://station1.me) · [Features](#features) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started) · [Architecture](#architecture--deployment)
+[**Live site →**](https://cv.deskflow.dev) · [Features](#features) · [Tech Stack](#tech-stack) · [Getting Started](#getting-started) · [Architecture](#architecture--deployment)
 
 </div>
 
@@ -22,7 +22,7 @@
 
 STATION1 is a full-stack Ruby on Rails application for building professional CVs and résumés. Users sign up, complete a guided multi-section form, choose from several visual templates, and produce a clean, print-ready document. The app is responsive across mobile and desktop, and is self-hosted in production behind a Cloudflare Tunnel.
 
-🔗 **Try it live: [station1.me](https://station1.me)**
+🔗 **Try it live: [cv.deskflow.dev](https://cv.deskflow.dev)**
 
 ## Features
 
