@@ -37,11 +37,8 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
-# Local deployment handoff / session notes (not for the repo).
-/DEPLOYMENT_HANDOFF.md
-/deploy/SESSION_SUMMARY.md
-/HANDOFF.md
-# Kamal deploy secrets — never commit (sourced from ~/.station1 at deploy time).
+# Kamal deploy secrets — never commit (resolved from config/master.key + the exported registry password).
 /.kamal/secrets*
 .env*
 
+/CLAUDE.md

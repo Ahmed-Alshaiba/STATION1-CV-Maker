@@ -44,10 +44,10 @@ STATION1 is a full-stack Ruby on Rails application for building professional CVs
 | **Database** | PostgreSQL |
 | **Frontend** | Hotwire (Turbo + Stimulus), Import Maps (no Node build step), Tailwind CSS, Dart Sass, Sprockets |
 | **Auth** | Devise |
-| **File storage** | Active Storage (local disk) |
+| **File storage** | Active Storage (Docker named volume) |
 | **Server** | Puma |
 | **Testing** | Capybara + Selenium (system tests) |
-| **Infrastructure** | Nginx, systemd, Cloudflare Tunnel (self-hosted) |
+| **Infrastructure** | Docker, Kamal 2, Cloudflare Tunnel (self-hosted on a Raspberry Pi) |
 
 ## Getting Started
 
@@ -77,20 +77,22 @@ Then open **http://localhost:3000**.
 
 ## Architecture & Deployment
 
-The production site runs **self-hosted** rather than on a managed PaaS, which keeps it cost-free and fully under control:
+The production site runs **self-hosted** on a Raspberry Pi 5 rather than on a managed PaaS, which keeps it cost-free and fully under control. It is deployed as a Docker container with **Kamal 2**, sharing the Pi's proxy, database, and tunnel with the other apps hosted there:
 
 ```
 Browser ──HTTPS──> Cloudflare (edge TLS) ──tunnel──> cloudflared
                                                           │
-                                                       Nginx ──> Puma (unix socket) ──> Rails 7
-                                                                                            ├── PostgreSQL
-                                                                                            └── Active Storage (disk)
+                                                    kamal-proxy  (routes by Host)
+                                                          │
+                                            station1 container ──> Puma :3000 ──> Rails 7
+                                                          ├── PostgreSQL (shared container)
+                                                          └── Active Storage (named volume)
 ```
 
 - **Cloudflare Tunnel** exposes the app with no port-forwarding, no static public IP, and automatic edge TLS.
-- **Nginx** serves static assets and reverse-proxies to **Puma** over a Unix socket.
-- **systemd** supervises the app and tunnel processes and restarts them on boot/failure.
-- **PostgreSQL** runs locally; uploads live on a persistent disk path with scheduled database + file backups.
+- **Kamal 2** builds an `arm64` image, pushes it to a registry on the Pi, and deploys with zero-downtime health checks.
+- **kamal-proxy** routes by `Host` to the right container; Rails serves its own precompiled assets, so there is no Nginx.
+- **PostgreSQL** runs in a shared container on the Pi; uploads persist in a Docker named volume across deploys.
 
 ## Data Model
 

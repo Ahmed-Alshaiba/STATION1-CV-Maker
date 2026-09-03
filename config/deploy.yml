@@ -1,5 +1,4 @@
 # Kamal 2 deploy config for STATION1 on the shared Raspberry Pi.
-# Placeholders in UPPER_CASE must be filled from the Pi / helpdesk before deploying.
 # STATION1 is additive: it reuses the shared kamal-proxy, the shared Postgres container (shared-postgres), and tunnel.
 
 service: station1
